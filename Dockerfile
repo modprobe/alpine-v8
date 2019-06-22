@@ -8,7 +8,7 @@
 #
 # The general strategy is this:
 #
-#   1. Build GN for alpine (this is a build dependency) 
+#   1. Build GN for alpine (this is a build dependency)
 #   2. Use depot_tools to fetch the V8 source and dependencies (needs glibc)
 #   3. Build V8 for alpine
 #   4. Make warez
@@ -22,7 +22,7 @@ FROM alpine:latest as gn-builder
 
 # This is the GN commit that we want to build. Most commits will probably build just fine but
 # this happened to be the latest commit when I did this.
-ARG GN_COMMIT=d7111cb6877187d1f378bd231e14ffdd5fdd87ae
+ARG GN_COMMIT=3ddcc49aadcf5dbc9c940d4b75619f09544cc947
 
 RUN \
   apk add --update --virtual .gn-build-dependencies \
@@ -46,7 +46,7 @@ RUN \
   && git clone https://gn.googlesource.com/gn /tmp/gn \
   && git -C /tmp/gn checkout ${GN_COMMIT} \
   && cd /tmp/gn \
-  && python build/gen.py --no-sysroot \
+  && python build/gen.py \
   && ninja -C out \
   && cp -f /tmp/gn/out/gn /usr/local/bin/gn \
 
@@ -66,7 +66,7 @@ FROM debian:9 as source
 
 # The V8 version we want to use. It's assumed that this will be a version tag, but it's just
 # used as "git commit $V8_VERSION" so anything that git can resolve will work.
-ARG V8_VERSION=5.7.441.1
+ARG V8_VERSION=7.7.132
 
 RUN \
   set -x && \
