@@ -160,4 +160,4 @@ RUN \
 #
 FROM alpine:latest
 COPY --from=v8 /tmp/v8/include /root/v8/include
-COPY --from=v8 /tmp/v8/out.gn/x64.release/obj /root/v8/lib
+COPY --from=v8 /tmp/v8/out.gn/x64.release /root/v8/lib
